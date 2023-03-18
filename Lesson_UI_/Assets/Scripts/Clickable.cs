@@ -10,19 +10,20 @@ public class Clickable : MonoBehaviour
     [SerializeField] private float _scaleTime = 0.25f;
     [SerializeField] private HitEffect _hitEffectPrefab;
     [SerializeField] private Resources _resources;
+    [SerializeField] private GoldCreator _goldCreator;
 
     private int _coinsPerClick = 1;
 
-    // Метод вызывается из Interaction при клике на объект
+    // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ Interaction пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     public void Hit()
     {
         HitEffect hitEffect = Instantiate(_hitEffectPrefab, transform.position, Quaternion.identity);
         hitEffect.Init(_coinsPerClick);
-        _resources.CollectCoins(1, transform.position);
         StartCoroutine(HitAnimation());
+        _goldCreator.Create();
     }
 
-    // Анимация колебания куба
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
     private IEnumerator HitAnimation()
     {
         for (float t = 0; t < 1f; t += Time.deltaTime / _scaleTime)
@@ -34,7 +35,7 @@ public class Clickable : MonoBehaviour
         transform.localScale = Vector3.one;
     }
 
-    // Этот метод увеличивает количество монет, получаемой при клике
+    // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
     public void AddCoinsPerClick(int value)
     {
         _coinsPerClick += value;
